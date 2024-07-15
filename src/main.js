@@ -4,15 +4,19 @@ import { refs } from "./js/refs";
 
 
 refs.formForm.addEventListener('submit', handleSearch);
+// refs.galleryCard.addEventListener('load', function() {
+//     refs.loader.style.display = 'none';
+// });
 
             function handleSearch(e) {
                         e.preventDefault();
                         const form = e.currentTarget;
                         const queryValue = form.elements.inputf.value.trim();
+                        refs.loader.style.display = 'block';
                         refs.galleryCard.innerHTML = '';
                         if (queryValue === "") {
                             {
-                                refs.loader.disabled = true;
+                                refs.loader.style.display = 'none';
                                 iziToast.show({
                                     message: '"Enter a search query in a search field. Pls try again"',
                                     messageColor: 'white',
@@ -30,7 +34,7 @@ refs.formForm.addEventListener('submit', handleSearch);
                                         else {
                                             return Promise.reject(new Error(''));
                                         }
-                                        refs.loader.disabled = true;
+                                        refs.loader.style.display = 'none';
                                     })
                                     .catch(fetchError)
                         .finally(() => {
@@ -39,7 +43,7 @@ refs.formForm.addEventListener('submit', handleSearch);
                     }
 
                     function fetchError(err) {
-                        refs.loader.disabled = true;
+                        refs.loader.style.display = 'none';
                         iziToast.show({
                             message: '"Sorry, there are no images matching your search query. Please try again!"',
                             messageColor: 'white',
@@ -49,5 +53,5 @@ refs.formForm.addEventListener('submit', handleSearch);
                                     })
                             }
 
-lightbox.on('show.simplelightbox', function () {
-        });
+// lightbox.on('show.simplelightbox', function () {
+//         });
