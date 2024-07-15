@@ -1,8 +1,11 @@
+
 // Описаний у документації
 import SimpleLightbox from "simplelightbox";
 // Додатковий імпорт стилів
 import "simplelightbox/dist/simple-lightbox.min.css";
 import { refs } from "./refs";
+
+import axios, {isCancel, AxiosError} from 'axios';
 
 export const lightbox = new SimpleLightbox('.gallery-item a', {
     captionsData: 'alt',
