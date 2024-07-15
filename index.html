@@ -7,24 +7,30 @@
     <title>Vanilla App Template</title>
     
     <script type="module" crossorigin src="/goit-js-hw-12/commonHelpers.js"></script>
-    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-10cb7c31.js">
-    <link rel="stylesheet" href="/goit-js-hw-12/assets/vendor-a088063d.css">
-    <link rel="stylesheet" href="/goit-js-hw-12/assets/index-8192f3ef.css">
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-ee72e1a4.js">
+    <link rel="stylesheet" href="/goit-js-hw-12/assets/vendor-1cd1f9d9.css">
+    <link rel="stylesheet" href="/goit-js-hw-12/assets/index-e5d5c62f.css">
   </head>
   <body>
 
     <section>
+      <div class="input-btn-container">
       <form class="input-button">
         <input type="text" class="input" name="inputf" id="" />
         <button type="submit" class="start-btn" data-start>Search</button>
       </form>
+    </div>
       <div class="gallery">
         <ul class = "list-class">
       
         </ul>
+        <div>
+        <button type="button" class="load-more-btn hidden" data-load>Load more</button> 
+        <div class="loader hidden"></div>
+      </div>
       </div>      
     </section>
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     
   </body>
 </html>
