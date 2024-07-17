@@ -19,6 +19,7 @@ async function handleSearch(e) {
   params.page = 1;
   if (params.q === '') {
     refs.loader.classList.add('hidden');
+    refs.loadMoreBtn.classList.add('hidden');
     {
       iziToast.show({
         message: '"Enter a search query in a search field. Pls try again"',
@@ -27,6 +28,7 @@ async function handleSearch(e) {
         backgroundColor: '#ef4040',
         position: 'topRight',
       });
+      form.reset();
     }
     return;
   }
