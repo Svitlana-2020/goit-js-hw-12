@@ -21,10 +21,10 @@
   -webkit-text-size-adjust: 100%;
 }
 .gallery {
-    overflow-y: scroll; /* Вертикальная полоса прокрутки */
-    overflow-x: hidden; /* Отключить горизонтальную прокрутку */
-    max-height: 80vh; /* Максимальная высота контейнера галереи */
-    padding-right: 10px; /* Дополнительное место для полосы прокрутки */
+    /* overflow-y: scroll; /* Вертикальная полоса прокрутки */
+    /* overflow-x: hidden; Отключить горизонтальную прокрутку */
+    /* max-height: 80vh; /* Максимальная высота контейнера галереи */
+    /* padding-right: 10px; Дополнительное место для полосы прокрутки */
 }
 
 .list-class {
@@ -176,7 +176,7 @@ display: none;
   border-radius: 50%;
   width: 48px;
   height: 48px;
-  color: #FF3D00;;
+  color: rgba(255, 200, 0, 0.932);
   /* position: fixed; */
 
   position: absolute;
@@ -203,7 +203,7 @@ display: none;
     animation: 1s spin linear infinite;
   }
   .loader:after {
-    color: #FF3D00;
+    color: blue;
     transform: rotateY(70deg);
     animation-delay: .4s;
   }

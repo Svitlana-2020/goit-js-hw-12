@@ -5,6 +5,7 @@ export const refs = {
     formForm: document.querySelector('.input-button'),
     loader: document.querySelector('.loader'),
     loadMoreBtn: document.querySelector('.load-more-btn'),
+    gallery: document.querySelector('.gallery'),
     // galleryItem: document.querySelector('.gallery-item'),
     }
 
