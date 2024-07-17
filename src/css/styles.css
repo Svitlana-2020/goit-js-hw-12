@@ -20,11 +20,18 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+.gallery {
+    overflow-y: scroll; /* Вертикальная полоса прокрутки */
+    overflow-x: hidden; /* Отключить горизонтальную прокрутку */
+    max-height: 80vh; /* Максимальная высота контейнера галереи */
+    padding-right: 10px; /* Дополнительное место для полосы прокрутки */
+}
 
 .list-class {
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
+  gap: 10px;
   margin: 0;
   padding: 0;
 }
@@ -173,7 +180,8 @@ display: none;
   /* position: fixed; */
 
   position: absolute;
-  top: calc(100% + 10px);
+  bottom: 150px;
+  /* top: calc(100% + 10px); */
   left: 50%;
   transform: translateX(-50%);
 

@@ -15,11 +15,11 @@ refs.loadMoreBtn.addEventListener('click', loadMore);
                         e.preventDefault();
                         const form = e.currentTarget;
                         params.q = form.elements.inputf.value.trim();
-                        refs.galleryCard.innerHTML = '';
                         refs.loader.classList.remove('hidden');
-                        refs.loadMoreBtn.classList.add('hidden');
+                        refs.galleryCard.innerHTML = '';
                         params.page = 1;
                         if (params.q === "") {
+                            refs.loader.classList.add('hidden')
                             {
                                 
                                 iziToast.show({
@@ -33,24 +33,29 @@ refs.loadMoreBtn.addEventListener('click', loadMore);
                                     return;
                         }
                         
+                        refs.loadMoreBtn.classList.add('hidden');
+                        
                         try {
                             const dataResponse = await getPictureByQuery(params);
                             const { hits, totalHits } = dataResponse;
                             console.log(hits, totalHits);
+
                             params.maxPage = Math.floor(totalHits / params.per_page);
                             console.log(params.maxPage);
+                            
                             
                             if (hits && hits.length > 0) {
                                 renderGalleryMarkup(hits);
                                 refs.loadMoreBtn.classList.remove('hidden');
-                                
+  
+                                                                    
                             } else {
                                 throw new Error('No images found');
                             }
                         } catch (error) {;
                             fetchError(error);
                         } finally {
-                            refs.loader.classList.add('hidden');
+                            refs.loader.classList.add('hidden')
                             form.reset(); // Сброс формы даже в случае ошибки
                         }
                     }
@@ -67,10 +72,25 @@ refs.loadMoreBtn.addEventListener('click', loadMore);
 
 
 async function loadMore() {
-    params.page += 1;
+
+    if (params.maxPage === params.page){
+        refs.loader.classList.add('hidden');
+        iziToast.show({
+            message: "We're sorry, but you've reached the end of search results.",
+            messageColor: 'white',
+            messageLineHeight: '150%',
+            backgroundColor: '#ef4040',
+            position: 'topRight'
+                    })
+return;
+    }
+
     refs.loader.classList.remove('hidden');
+    params.page += 1;
+    
 
     try {
+
         const dataResponse = await getPictureByQuery(params);
         const { hits } = dataResponse;
         console.log(hits);
@@ -78,6 +98,19 @@ async function loadMore() {
         if (hits && hits.length > 0) {
             renderGalleryMarkup(hits);
             refs.loadMoreBtn.classList.remove('hidden');
+            
+
+            const galleryItem = document.querySelector('.gallery-item');
+            const cardHeight = galleryItem.getBoundingClientRect().height;
+            const cardHeightValue = cardHeight * 4;
+        
+  
+        window.scrollBy({
+            top: cardHeightValue,
+            behavior: "smooth",
+        });
+   
+
         } else {
             throw new Error('No images found');
         }
@@ -86,17 +119,6 @@ async function loadMore() {
     }
     finally {
         refs.loader.classList.add('hidden');
-        if (params.maxPage === params.page){
-            iziToast.show({
-                message: "We're sorry, but you've reached the end of search results.",
-                messageColor: 'white',
-                messageLineHeight: '150%',
-                backgroundColor: '#ef4040',
-                position: 'topRight'
-                        })
-
-        }
-        refs.loadMoreBtn.classList.add('hidden');
         // form.reset(); // Сброс формы даже в случае ошибки
     }
 }
