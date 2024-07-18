@@ -32,6 +32,7 @@ async function handleSearch(e) {
     }
     return;
   }
+  
 
   refs.gallery.scrollBy({
     top: 1000,
@@ -42,19 +43,33 @@ async function handleSearch(e) {
 
   try {
     const dataResponse = await getPictureByQuery(params);
-    const { hits } = dataResponse;
-    console.log(hits);
-
-    // params.maxPage = Math.floor(totalHits / params.per_page);
-    // console.log(params.maxPage);
+    const { hits, totalHits } = dataResponse;
+    console.log(hits, totalHits);
 
     if (hits && hits.length > 0) {
       renderGalleryMarkup(hits);
+
+      const maxPage = Math.ceil(totalHits / params.per_page);
+
+      if (maxPage === params.page) {
+    refs.loader.classList.add('hidden');
+    refs.loadMoreBtn.classList.add('hidden');
+    iziToast.show({
+      message: "We're sorry, but you've reached the end of search results.",
+      messageColor: 'white',
+      messageLineHeight: '150%',
+      backgroundColor: '#ef4040',
+      position: 'topRight',
+    });
+    return;
+  }
 
       refs.loadMoreBtn.classList.remove('hidden');
     } else {
       throw new Error('No images found');
     }
+
+    
   } catch (error) {
     fetchError(error);
   } finally {
@@ -76,19 +91,6 @@ function fetchError(error) {
 
 async function loadMore(e) {
 
-  // if (params.maxPage === params.page) {
-  //   refs.loader.classList.add('hidden');
-  //   refs.loadMoreBtn.classList.add('hidden');
-  //   iziToast.show({
-  //     message: "We're sorry, but you've reached the end of search results.",
-  //     messageColor: 'white',
-  //     messageLineHeight: '150%',
-  //     backgroundColor: '#ef4040',
-  //     position: 'topRight',
-  //   });
-  //   return;
-  // }
-
   refs.loader.classList.remove('hidden');
  
   params.page += 1;
@@ -98,9 +100,20 @@ async function loadMore(e) {
     const { hits, totalHits } = dataResponse;
     console.log(hits, totalHits);
 
-    params.maxPage = Math.ceil(totalHits / params.per_page);
+  renderGalleryMarkup(hits);
 
-      if (params.maxPage < params.page) {
+      const galleryItem = document.querySelector('.gallery-item');
+      const cardHeight = galleryItem.getBoundingClientRect().height;
+      const cardHeightValue = cardHeight * 2;
+
+      window.scrollBy({
+        top: cardHeightValue,
+        behavior: "smooth",
+      });
+
+      const maxPage = Math.ceil(totalHits / params.per_page);
+
+      if (maxPage === params.page) {
     refs.loader.classList.add('hidden');
     refs.loadMoreBtn.classList.add('hidden');
     iziToast.show({
@@ -112,17 +125,6 @@ async function loadMore(e) {
     });
     return;
   }
-
-      renderGalleryMarkup(hits);
-
-      const galleryItem = document.querySelector('.gallery-item');
-      const cardHeight = galleryItem.getBoundingClientRect().height;
-      const cardHeightValue = cardHeight * 2;
-
-      window.scrollBy({
-        top: cardHeightValue,
-        behavior: "smooth",
-      });
 
       refs.loadMoreBtn.classList.remove('hidden');
 

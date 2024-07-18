@@ -9,7 +9,7 @@ export const params = {
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: 'true',
-        maxPage: 0,
+        // maxPage: 0,
     }
 
 axios.defaults.baseURL = "https://pixabay.com/api/";
